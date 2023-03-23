@@ -90,3 +90,18 @@ void backward(int button) {
     
   }
 }
+
+void left(int button) {
+  if (button == buttonPause){
+    //Hard left (90°) NEED CALIBRATION
+    Car1.LeftCircle(100);
+  }
+  if (button == butttonEQ) {
+    //Medium left NEED CALIBRATION
+    Car1.MotorRun(100,250);
+  }
+  if (button == butttonEQ) {
+    //Light left NEED CALIBRATION
+    Car1.MotorRun(30,250);
+  }
+}
