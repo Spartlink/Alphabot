@@ -54,31 +54,37 @@ void loop() {
   if (results.value == buttonCentPlus || buttonPlus) {
     forward(results.value);
   }
+  if (results.value == buttonCentPlus || buttonPlus) {
+    left(results.value);
+  }
   irrecv.resume();
  }
  delay(50);
 }
 
-void setSpeed(speedInt) {
-  speed = speedInt;
-  Carl.SetSpeed(speed);
-}
-
 void forward(int button) {
   if (button == buttonCentPlus) {
-    speed = speedOne;
+    speed = speedTwo;
     Carl.SetSpeed(speed);
     Carl.Forward(1000);
   } else if (button == buttonPlus) {
-    speed = speedTwo;
+    speed = speedOne;
     Carl.SetSpeed(speed);
     Carl.Forward(1000);
   }
 }
 
-void backward(int button) {
-  if (button == buttonDeux) {
-    speed = speedOne;
-      
+void left(int button) {
+  if (button == buttonPause){
+    //Hard left (90°) NEED CALIBRATION
+    Car1.LeftCircle(100);
+  }
+  if (button == butttonEQ) {
+    //Medium left NEED CALIBRATION
+    Car1.MotorRun(100,250);
+  }
+  if (button == butttonEQ) {
+    //Light left NEED CALIBRATION
+    Car1.MotorRun(30,250);
   }
 }
