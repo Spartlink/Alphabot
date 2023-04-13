@@ -51,7 +51,9 @@ void setup() {
 
 void loop() {
  if (irrecv.decode(&results)) {
+  
   Serial.println(results.value);
+  
   if (results.value == buttonCentPlus || buttonPlus) {
     forward(results.value);
   } 
@@ -59,6 +61,12 @@ void loop() {
   if (results.value == buttonDeux || buttonCinq) {
     backward(results.value);
   }
+
+  if (results.value == buttonEQ || buttonPause)
+ {
+    left(results.value);
+  }
+  
   irrecv.resume();
  }
  delay(50);
@@ -92,16 +100,12 @@ void backward(int button) {
 }
 
 void left(int button) {
-  if (button == buttonPause){
-    //Hard left (90°) NEED CALIBRATION
-    Car1.LeftCircle(100);
-  }
-  if (button == butttonEQ) {
-    //Medium left NEED CALIBRATION
-    Car1.MotorRun(100,250);
-  }
-  if (button == butttonEQ) {
-    //Light left NEED CALIBRATION
-    Car1.MotorRun(30,250);
-  }
+  if (button == buttonPause) {
+    Carl.LeftCircle(100);
+  } else if (button == buttonEQ) {
+    Serial.println("debug");
+    Carl.MotorRun(100,250);
+    delay(1000);
+    Carl.Brake();
+  } 
 }
