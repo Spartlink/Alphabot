@@ -3,6 +3,7 @@
 
 #include <AlphaBot.h>
 #include <IRremote.h>
+#include <Servo.h> 
 
 //____________________________________ VARIABLES ____________________________________
 // Code des boutons, NE PAS MODIFIER sauf erreur
@@ -39,23 +40,31 @@ const int buttonContinu = 4294967295;
 // Constantes
 const int speedOne = 100;
 const int speedTwo = 255;
+const int serv_out = 6;
+const int pos_ouv = 50;
+const int pos_fer = 210;
+const int vitesse = 2;
 
 //Non constantes
-int speed = speedOne; // mutable speed variable
+int speed = speedOne; 
 int RECV_PIN = 4;
+int pos = 100;    // variable contenant la position désirée 
 
+//______________________________________ SETUP ______________________________________
 IRrecv irrecv(RECV_PIN);
 decode_results results;
 AlphaBot Carl = AlphaBot();
+Servo servo;
 
-//______________________________________ SETUP ______________________________________
 void setup() {
   Carl.SetSpeed(speed); // set speed of the bot
   Serial.begin(9600);
   irrecv.enableIRIn();
+  servo.write(25);
 }
 
 //____________________________________ FONCTIONS ____________________________________
+//------------------------ Mouvement ------------------------
 void setSpeed(int speedInt) {
   speed = speedInt;
   Carl.SetSpeed(speed);
@@ -93,6 +102,28 @@ void left(int button) {
     Carl.Brake();
   } 
 }
+
+//-------------------------- Pince --------------------------
+void fermeture()
+{
+    servo.attach(serv_out); 
+    for(pos = pos_ouv; pos < pos_fer; pos += vitesse)  
+    {                              
+    servo.write(pos);
+    delay(5);                                   
+    } 
+    servo.detach(); 
+}
+void ouverture()
+{
+    servo.attach(serv_out); 
+    for(pos = pos_fer; pos > pos_ouv; pos -= vitesse)  
+    {                                    
+    servo.write(pos);
+    delay(5);                                    
+    }  
+    servo.detach(); 
+} 
 
 //____________________________________ MAIN _____________________________________
 void loop() {
