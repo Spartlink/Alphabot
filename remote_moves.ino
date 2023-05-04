@@ -1,10 +1,10 @@
 // Alphabot Project 
-
-// Libraries include
+//___________________________________ LIBRAIRIES ___________________________________
 
 #include <AlphaBot.h>
 #include <IRremote.h>
 
+//____________________________________ VARIABLES ____________________________________
 // Code des boutons, NE PAS MODIFIER sauf erreur
 
 const int buttonChMoins = 16753245;
@@ -35,45 +35,27 @@ const int buttonNeuf = 16732845;
 
 const int buttonContinu = 4294967295;
 
-// const value initialisation
+//------------------------ Autres Variables ------------------------
+// Constantes
 const int speedOne = 100;
 const int speedTwo = 255;
+
+//Non constantes
 int speed = speedOne; // mutable speed variable
 int RECV_PIN = 4;
+
 IRrecv irrecv(RECV_PIN);
 decode_results results;
-
 AlphaBot Carl = AlphaBot();
 
+//______________________________________ SETUP ______________________________________
 void setup() {
   Carl.SetSpeed(speed); // set speed of the bot
   Serial.begin(9600);
   irrecv.enableIRIn();
 }
 
-void loop() {
- if (irrecv.decode(&results)) {
-  
-  Serial.println(results.value);
-  
-  if (results.value == buttonCentPlus || buttonPlus) {
-    forward(results.value);
-  } 
-  
-  if (results.value == buttonDeux || buttonCinq) {
-    backward(results.value);
-  }
-
-  if (results.value == buttonEQ || buttonPause)
- {
-    left(results.value);
-  }
-  
-  irrecv.resume();
- }
- delay(50);
-}
-
+//____________________________________ FONCTIONS ____________________________________
 void setSpeed(int speedInt) {
   speed = speedInt;
   Carl.SetSpeed(speed);
@@ -110,4 +92,28 @@ void left(int button) {
     delay(1000);
     Carl.Brake();
   } 
+}
+
+//____________________________________ MAIN _____________________________________
+void loop() {
+ if (irrecv.decode(&results)) {
+  
+  Serial.println(results.value);
+  
+  if (results.value == buttonCentPlus || buttonPlus) {
+    forward(results.value);
+  } 
+  
+  if (results.value == buttonDeux || buttonCinq) {
+    backward(results.value);
+  }
+
+  if (results.value == buttonEQ || buttonPause)
+ {
+    left(results.value);
+  }
+  
+  irrecv.resume();
+ }
+ delay(50);
 }
