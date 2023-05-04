@@ -33,6 +33,8 @@ const int buttonSept = 16728765;
 const int buttonHuit = 16730805;
 const int buttonNeuf = 16732845;
 
+const int buttonContinu = 4294967295;
+
 // const value initialisation
 const int speedOne = 100;
 const int speedTwo = 255;
